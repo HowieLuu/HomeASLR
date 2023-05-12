@@ -17,8 +17,8 @@ Training an ML model on American Sign Language Recognition (ASLR), then interfac
     1. [TensorFlow implementation](https://towardsdatascience.com/sign-language-recognition-with-advanced-computer-vision-7b74f20f3442)
     2. [MediaPipe for webcam capture](https://www.youtube.com/watch?v=MJCSjXepaAM)
 4. Alexa Interface
-    1. [Alexa Skills Kit](https://developer.amazon.com/en-US/alexa/alexa-skills-kit)
-    2. [Connect Alexa to Desktop](https://www.hellotech.com/guide/for/how-to-connect-alexa-to-computer)
+    1. [Node Red](https://nodered.org/)
+    2. [Node Red Python Flow](https://flows.nodered.org/node/node-red-contrib-pythonshell)
 
 
 ## Possible data sources
