@@ -27,8 +27,8 @@ for label_dir in os.listdir(RAW_DATA_DIR):
 
         entry = []
 
-        x = []
-        y = []
+        landmark_xs = []
+        landmark_ys = []
 
         result = hands.process(img_rgb)
 
@@ -39,14 +39,17 @@ for label_dir in os.listdir(RAW_DATA_DIR):
             # Model found two hands
             continue
         
-        for landmarks in result.multi_hand_landmarks:
-            for i in range(len(landmarks.landmark)):
-                x.append(landmarks.landmark[i].x)
-                y.append(landmarks.landmark[i].y)
+        landmarks = result.multi_hand_landmarks[0]
 
-            for i in range(len(landmarks.landmark)):
-                entry.append(landmarks.landmark[i].x - min(x))
-                entry.append(landmarks.landmark[i].y - min(y))
+        # Cycling through the landmarks to store coordinates
+        for lm in landmarks.landmark:
+            landmark_xs.append(lm.x)
+            landmark_ys.append(lm.y)
+
+        # Saving relative positions of landmarks as data entry
+        for lm in landmarks.landmark:
+            entry.append(lm.x - min(landmark_xs))
+            entry.append(lm.y - min(landmark_ys))
             
         data.append(entry)
         labels.append(label_dir)

@@ -6,10 +6,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 
-processed_data = pickle.load(open('../data/data.pickle', 'rb'))
+data_pickle = pickle.load(open('../data/data.pickle', 'rb'))
 
-data = np.asarray(processed_data['data'])
-labels = np.asarray(processed_data['labels'])
+data = np.asarray(data_pickle['data'])
+labels = np.asarray(data_pickle['labels'])
 
 x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, shuffle=True, stratify=labels)
 
