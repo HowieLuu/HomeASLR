@@ -1,0 +1,136 @@
+[
+    {
+        "id": "1ce7bbcd150442c5",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c32c1bccb37da904",
+        "type": "inject",
+        "z": "1ce7bbcd150442c5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 390,
+        "y": 300,
+        "wires": [
+            [
+                "a5f980ee10a8be0a"
+            ]
+        ]
+    },
+    {
+        "id": "f5bc6936a82a79bf",
+        "type": "switch",
+        "z": "1ce7bbcd150442c5",
+        "name": "if not \"\":",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 820,
+        "y": 300,
+        "wires": [
+            [
+                "aa9eaff809e19ad9",
+                "ff259d3f9bcf9cb7"
+            ]
+        ]
+    },
+    {
+        "id": "a5f980ee10a8be0a",
+        "type": "file in",
+        "z": "1ce7bbcd150442c5",
+        "name": "Read buffer",
+        "filename": "C:\\Users\\Howard\\Desktop\\AlexaASLR\\buffer\\string.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 590,
+        "y": 300,
+        "wires": [
+            [
+                "f5bc6936a82a79bf"
+            ]
+        ]
+    },
+    {
+        "id": "9556fa640841a654",
+        "type": "file",
+        "z": "1ce7bbcd150442c5",
+        "name": "clear buffer",
+        "filename": "C:\\Users\\Howard\\Desktop\\AlexaASLR\\buffer\\string.txt",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1190,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa9eaff809e19ad9",
+        "type": "debug",
+        "z": "1ce7bbcd150442c5",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ff259d3f9bcf9cb7",
+        "type": "function",
+        "z": "1ce7bbcd150442c5",
+        "name": "\"\"",
+        "func": "msg.payload = \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 220,
+        "wires": [
+            [
+                "9556fa640841a654"
+            ]
+        ]
+    }
+]
