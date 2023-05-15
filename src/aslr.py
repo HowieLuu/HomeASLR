@@ -8,7 +8,7 @@ import numpy as np
 
 MODEL_DIR = '../data/model.p'
 BUFFER_FILENAME = "../buffer/string.txt"
-CAPTURE_INTERVAL = 5 # minimum time between character registerations (seconds)
+CAPTURE_INTERVAL = 2 # minimum time between character registerations (seconds)
 
 # Mutable string is a hack that allows us pass in strings by reference to write_text
 class MutableString:
@@ -16,10 +16,14 @@ class MutableString:
         self.text = txt
 
 # Writes the text string to a buffer file (for Node Red to process)
-def write_text(text_string, filename):
+def write_text(text_object, filename):
     with open(filename, 'w') as f:
-        f.write(text_string.text)
-    text_string.text = ""
+        f.write(text_object.text)
+    text_object.text = ""
+
+# Deletes a character
+def del_text(text_object):
+    text_object.text = text_object.text[:-1]
 
 # Main Loop
 def loop():
@@ -38,9 +42,10 @@ def loop():
 
     sentence = MutableString("")
 
-    # Event listener for the enter key
+    # Event listener for the enter and backspace key
     # Global listener (even if webcam window is not focused)
     keyboard.on_release_key("enter", lambda _: write_text(sentence, BUFFER_FILENAME))
+    keyboard.on_release_key("backspace", lambda _: del_text(sentence))
 
     t = time.time()
     while(True):

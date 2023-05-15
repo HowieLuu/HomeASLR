@@ -2,10 +2,18 @@
     {
         "id": "1ce7bbcd150442c5",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "TTS",
         "disabled": false,
         "info": "",
         "env": []
+    },
+    {
+        "id": "fae8342c7741e073",
+        "type": "castv2-connection",
+        "name": "",
+        "target": "Mini",
+        "host": "192.168.1.4",
+        "port": "8009"
     },
     {
         "id": "c32c1bccb37da904",
@@ -28,8 +36,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 390,
-        "y": 300,
+        "x": 130,
+        "y": 80,
         "wires": [
             [
                 "a5f980ee10a8be0a"
@@ -40,7 +48,7 @@
         "id": "f5bc6936a82a79bf",
         "type": "switch",
         "z": "1ce7bbcd150442c5",
-        "name": "if not \"\":",
+        "name": "Buffer not empty",
         "property": "payload",
         "propertyType": "msg",
         "rules": [
@@ -51,12 +59,13 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 820,
-        "y": 300,
+        "x": 340,
+        "y": 200,
         "wires": [
             [
                 "aa9eaff809e19ad9",
-                "ff259d3f9bcf9cb7"
+                "ff259d3f9bcf9cb7",
+                "52b3cdc1e6d330cc"
             ]
         ]
     },
@@ -72,8 +81,8 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 590,
-        "y": 300,
+        "x": 230,
+        "y": 140,
         "wires": [
             [
                 "f5bc6936a82a79bf"
@@ -84,15 +93,15 @@
         "id": "9556fa640841a654",
         "type": "file",
         "z": "1ce7bbcd150442c5",
-        "name": "clear buffer",
+        "name": "Clear buffer",
         "filename": "C:\\Users\\Howard\\Desktop\\AlexaASLR\\buffer\\string.txt",
         "filenameType": "str",
         "appendNewline": false,
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 1190,
-        "y": 220,
+        "x": 710,
+        "y": 120,
         "wires": [
             []
         ]
@@ -101,7 +110,7 @@
         "id": "aa9eaff809e19ad9",
         "type": "debug",
         "z": "1ce7bbcd150442c5",
-        "name": "debug 2",
+        "name": "buffer_msg",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -110,27 +119,77 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1040,
-        "y": 380,
+        "x": 530,
+        "y": 200,
         "wires": []
     },
     {
         "id": "ff259d3f9bcf9cb7",
         "type": "function",
         "z": "1ce7bbcd150442c5",
-        "name": "\"\"",
+        "name": "Empty payload",
         "func": "msg.payload = \"\";\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1030,
-        "y": 220,
+        "x": 520,
+        "y": 120,
         "wires": [
             [
                 "9556fa640841a654"
             ]
         ]
+    },
+    {
+        "id": "565b4406db90a92e",
+        "type": "castv2-sender",
+        "z": "1ce7bbcd150442c5",
+        "name": "Google Home Mini",
+        "connection": "fae8342c7741e073",
+        "x": 710,
+        "y": 260,
+        "wires": [
+            [
+                "e403c7feb4f69311"
+            ]
+        ]
+    },
+    {
+        "id": "52b3cdc1e6d330cc",
+        "type": "function",
+        "z": "1ce7bbcd150442c5",
+        "name": "Format Msg",
+        "func": "return {\n    payload: {\n        app: \"DefaultMediaReceiver\",\n            type: \"TTS\",\n                text: msg.payload,\n                    speed: 1, // optional to adjust TTS speed, defaults to 1\n                        language: \"en\", // optional to set TTS language, default to en\n                            metadata: { // optional unless desired, follows normal metadata rules noted above\n            title: \"Media title\"\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 260,
+        "wires": [
+            [
+                "565b4406db90a92e"
+            ]
+        ]
+    },
+    {
+        "id": "e403c7feb4f69311",
+        "type": "debug",
+        "z": "1ce7bbcd150442c5",
+        "name": "device_status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 260,
+        "wires": []
     }
 ]
