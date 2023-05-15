@@ -1,29 +1,21 @@
-# AlexaASLR
-Training an ML model on American Sign Language Recognition (ASLR), then interfacing the model with Alexa to allow for sign language to speech 
+# HomeASLR
+Training an ML model on American Sign Language Recognition (ASLR), then interfacing the model with Google Home to allow for sign language to speech 
 
-## Current steps:
-1. Gather data
-    1. From various Kaggle sources
-    2. From webcam data collection
-2. Preprocess the data
-    1. Images may differ from source to source, but the network must take in a pre-defined size
-    2. Therefore we must either crop or resize input images
-        1. [Rescale/crop images with TensorFlow](https://wandb.ai/ayush-thakur/dl-question-bank/reports/How-to-Handle-Images-of-Different-Sizes-in-a-Convolutional-Neural-Network--VmlldzoyMDk3NzQ)
-        2. [Rescale/crop images with OpenCV](https://learnopencv.com/image-resizing-with-opencv/#resize-with-scaling-factor)
-    3. We also must determine what size the input image should be
-        1. [Small training resolution can improve performance](https://arxiv.org/pdf/1906.06423.pdf)
-        2. [Image size in radiology deep learning](https://pubs.rsna.org/doi/full/10.1148/ryai.2019190015)
-3. Building a model
-    1. [TensorFlow implementation](https://towardsdatascience.com/sign-language-recognition-with-advanced-computer-vision-7b74f20f3442)
-    2. [MediaPipe for webcam capture](https://www.youtube.com/watch?v=MJCSjXepaAM)
-4. Alexa Interface
-    1. [Node Red](https://nodered.org/)
-    2. [Node Red Python Flow](https://flows.nodered.org/node/node-red-contrib-pythonshell)
-
-
-## Possible data sources
-1. [Mediapipe link has module to capture image streams from webcam](https://www.youtube.com/watch?v=MJCSjXepaAM)
-2. [Kaggle ASL](https://www.kaggle.com/datasets/grassknoted/asl-alphabet)
-    1. 87000 images
-    2. 200x200 resolution
-    3. Labels for space, delete, return
+## How to use
+### Set-up
+1. Install python dependencies (see requirements.txt)
+2. The data has already been preprocessed (data/data.pickle)
+    1. src/data_processing.py can be run on new ASL data to get hand landmark data if desired
+3. The model has been pre-trained
+    1. src/model.py can be run on data/data.pickle to retrain
+4. Install nodeJS and dependencies (commands for windows)
+    1. install node.js
+    2. \[create directory for node red install\]
+    3. cd \[new directory\]
+    4. npm install node_red
+    5. npm install node-red-contrib-castv2
+    6. mklink red.js node_modules\node-red\red.js
+### Running the application
+1. Run the aslr.py script
+2. start Node Red
+    1. node node_red/red.js
